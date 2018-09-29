@@ -55,6 +55,15 @@ bool q_insert_head(queue_t *q, char *s)
     newh = malloc(sizeof(list_ele_t));
     /* Don't forget to allocate space for the string and copy it */
     /* What if either call to malloc returns NULL? */
+    if (newh == NULL) {
+        return false;
+    }
+    newh->value = malloc(strlen(s) + 1);
+    if (newh->value == NULL) {
+        free(newh);
+        return false;
+    }
+    strcpy(newh->value, s);
     newh->next = q->head;
     q->head = newh;
     return true;
@@ -86,7 +95,17 @@ bool q_insert_tail(queue_t *q, char *s)
 bool q_remove_head(queue_t *q, char *sp, size_t bufsize)
 {
     /* You need to fix up this code. */
+    if (q == NULL || q->head == NULL) {
+        return false;
+    }
+    list_ele_t *head = q->head;
+    if (sp != NULL) {
+        strncpy(sp, head->value, bufsize - 1);
+        sp[bufsize - 1] = 0;
+    }
     q->head = q->head->next;
+    free(head->value);
+    free(head);
     return true;
 }
 
