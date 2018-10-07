@@ -11,6 +11,7 @@
  * It uses a singly-linked list to represent the set of queue elements
  */
 
+#include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -61,7 +62,7 @@ void q_free(queue_t *q)
  */
 bool q_insert_head(queue_t *q, char *s)
 {
-    if (q == NULL || s == NULL) {
+    if (q == NULL || s == NULL || q->size == INT_MAX) {
         return false;
     }
     list_ele_t *newh;
@@ -99,7 +100,7 @@ bool q_insert_tail(queue_t *q, char *s)
 {
     /* You need to write the complete code for this function */
     /* Remember: It should operate in O(1) time */
-    if (q == NULL || s == NULL) {
+    if (q == NULL || s == NULL || q->size == INT_MAX) {
         return false;
     }
     list_ele_t *newt;
